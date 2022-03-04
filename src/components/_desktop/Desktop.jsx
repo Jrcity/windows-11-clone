@@ -1,34 +1,19 @@
-import React from 'react';
-import styled from '@emotion/styled';
-import {
-  Container,
-  Divider,
-  List,
-  ListItemButton,
-  ListItemText,
-  Paper,
-  Popover,
-  Typography,
-} from '@mui/material';
+import React from "react";
+import styled from "@emotion/styled";
+import { Container, Divider, Popover } from "@mui/material";
 
-//color theme
-import { colors } from '../../utils/theme';
 // import images
-import wallpaper from '../../../public/images/win11-bg-dark.jpg';
+import wallpaper from "../../../public/images/win11-bg-dark.jpg";
+import DesktopDialog, { DestopDialogItem } from "./DesktopDialog";
+import { desktop_dialog_list } from "../../utils/desktop_dialog_list";
 
 const DesktopContainer = styled(Container)((props) => ({
   // some styles
-  height: '100vh',
-  overflow: 'hidden',
+  height: "100vh",
+  overflow: "hidden",
   background: `url(${props.wallpaper}) no-repeat`,
-  backgroundPosition: '100% 100%',
-  backgroundSize: 'cover',
-}));
-
-const DesktopMenu = styled(Paper)(() => ({
-  background: colors.dark.concat('a9'),
-  width: 220,
-  height: 'fit-content',
+  backgroundPosition: "100% 100%",
+  backgroundSize: "cover",
 }));
 
 export default function Desktop(props) {
@@ -38,9 +23,6 @@ export default function Desktop(props) {
     setAnchorEl(ev.currentTarget);
     ev.preventDefault();
     ev.stopPropagation();
-    document
-      .getElementById('desktop__menu')
-      .removeEventListener('mousemove', getCoordinates);
   }
   const handleClose = () => {
     setAnchorEl(null);
@@ -53,23 +35,23 @@ export default function Desktop(props) {
   }, []);
   React.useEffect(() => {
     document
-      .getElementById('desktop__menu')
-      .addEventListener('mousemove', getCoordinates, false);
+      .getElementById("desktop__menu")
+      .addEventListener("mousemove", getCoordinates, false);
   }, [getCoordinates]);
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const id = open ? "simple-Popover" : undefined;
 
   const X_COORD = coordinates?.[0];
   const Y_COORD = coordinates?.[1];
   return (
     <DesktopContainer
-      id="desktop__menu"
+      id='desktop__menu'
       // onMouseMove={getCoordinates}
       onClick={handleClose}
       aria-describedby={id}
       onContextMenu={handleOpenContext}
-      maxWidth="xl"
+      maxWidth='xl'
       wallpaper={wallpaper}
     >
       <Popover
@@ -82,26 +64,94 @@ export default function Desktop(props) {
           horizontal: X_COORD,
         }}
       >
-        <DesktopMenu>
-          <List>
-            <ListItemButton>
-              <ListItemText primary="New" />
-            </ListItemButton>
-            <Divider />
-            <ListItemButton>
-              <ListItemText primary="Refresh" />
-            </ListItemButton>{' '}
-            <ListItemButton>
-              <ListItemText primary="New" />
-            </ListItemButton>{' '}
-            <ListItemButton>
-              <ListItemText primary="New" />
-            </ListItemButton>{' '}
-            <ListItemButton>
-              <ListItemText primary="New" />
-            </ListItemButton>
-          </List>
-        </DesktopMenu>
+        <DesktopDialog>
+          {desktop_dialog_list.map((item, idx) => {
+            switch (idx) {
+              case 0:
+                return (
+                  <>
+                    <DestopDialogItem
+                      key={idx}
+                      ListText={item.name}
+                      PrefixIcon={item.prefixIcon}
+                      SuffixIcon={item.suffixIcon}
+                    />
+                  </>
+                );
+              case 1:
+                return (
+                  <>
+                    <DestopDialogItem
+                      key={idx}
+                      ListText={item.name}
+                      PrefixIcon={item.prefixIcon}
+                      SuffixIcon={item.suffixIcon}
+                    />
+                    <Divider />
+                  </>
+                );
+              case 2:
+                return (
+                  <>
+                    <DestopDialogItem
+                      disabled
+                      key={idx}
+                      ListText={item.name}
+                      PrefixIcon={item.prefixIcon}
+                      SuffixIcon={item.suffixIcon}
+                    />
+                  </>
+                );
+              case 3:
+                return (
+                  <>
+                    <DestopDialogItem
+                      key={idx}
+                      ListText={item.name}
+                      PrefixIcon={item.prefixIcon}
+                      SuffixIcon={item.suffixIcon}
+                    />
+                    <Divider />
+                  </>
+                );
+              case 4:
+                return (
+                  <>
+                    <DestopDialogItem
+                      key={idx}
+                      ListText={item.name}
+                      PrefixIcon={item.prefixIcon}
+                      SuffixIcon={item.suffixIcon}
+                    />
+                  </>
+                );
+              case 5:
+                return (
+                  <>
+                    <DestopDialogItem
+                      key={idx}
+                      ListText={item.name}
+                      PrefixIcon={item.prefixIcon}
+                      SuffixIcon={item.suffixIcon}
+                    />
+                    <Divider />
+                  </>
+                );
+              case 6:
+                return (
+                  <>
+                    <DestopDialogItem
+                      key={idx}
+                      ListText={item.name}
+                      PrefixIcon={item.prefixIcon}
+                      SuffixIcon={item.suffixIcon}
+                    />
+                  </>
+                );
+            }
+          })}
+
+        </DesktopDialog>
       </Popover>
       {props.children}
     </DesktopContainer>
